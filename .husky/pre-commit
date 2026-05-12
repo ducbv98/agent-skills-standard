@@ -16,3 +16,4 @@ git add skills/metadata.json skills/index.json README.md
 # Run core validation to ensure skill integrity
 echo "🔍 Validating skills..."
 pnpm validate
+
