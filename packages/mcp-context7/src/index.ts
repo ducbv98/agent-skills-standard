@@ -8,8 +8,9 @@ import { loadConfig } from "./config.js";
 async function main(): Promise<void> {
   const config = loadConfig();
   const engine = new HybridRagEngine(config);
-  await engine.initialize();
 
+  // Lazy init: connect to Neo4j/Qdrant on first tool call, not at startup.
+  // This lets the MCP server register successfully even when infra is offline.
   const server = buildContext7Server(engine);
   const transport = new StdioServerTransport();
 

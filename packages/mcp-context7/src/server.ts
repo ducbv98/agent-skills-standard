@@ -108,7 +108,7 @@ Show available retrieval modes with descriptions.
         lines.push(`**Offsets**: ${result.chunk.startOffset}–${result.chunk.endOffset}`);
         if (result.entities && result.entities.length > 0) {
           lines.push(
-            `**Entities**: ${result.entities.map((e) => `${e.name} (${e.type})`).join(", ")}`,
+            `**Entities**: ${result.entities.map((e: { name: string; type: string }) => `${e.name} (${e.type})`).join(", ")}`,
           );
         }
         if (result.graphPath && result.graphPath.length > 0) {

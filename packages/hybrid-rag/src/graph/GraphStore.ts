@@ -1,8 +1,11 @@
-import neo4j, { Driver, Session } from "neo4j-driver";
+import neo4j, { Driver } from "neo4j-driver";
 import type { Neo4jConfig, Entity, Relationship, Chunk } from "../types.js";
 
 /**
  * Neo4j graph store for GraphRAG.
+ *
+ * Driver is created lazily on first use so that the MCP server can start
+ * without a live Neo4j instance.
  *
  * Schema:
  *   (:Chunk {id, content, documentId, startOffset, endOffset})
@@ -11,30 +14,37 @@ import type { Neo4jConfig, Entity, Relationship, Chunk } from "../types.js";
  *   (:Entity)-[:RELATES_TO {type, ...}]->(:Entity)
  */
 export class GraphStore {
-  private readonly driver: Driver;
+  private _driver: Driver | null = null;
+  private readonly config: Neo4jConfig;
 
   constructor(config: Neo4jConfig) {
-    this.driver = neo4j.driver(
-      config.uri,
-      neo4j.auth.basic(config.user, config.password),
-      { maxConnectionPoolSize: 20 },
-    );
+    this.config = config;
+  }
+
+  /** Lazy driver — created only when first needed. */
+  private driver(): Driver {
+    if (!this._driver) {
+      this._driver = neo4j.driver(
+        this.config.uri,
+        neo4j.auth.basic(this.config.user, this.config.password),
+        { maxConnectionPoolSize: 20 },
+      );
+    }
+    return this._driver;
   }
 
   /** Verify connectivity and create indexes. */
   async initialize(): Promise<void> {
-    await this.driver.verifyConnectivity();
-    const session = this.driver.session();
+    const d = this.driver();
+    await d.verifyConnectivity();
+    const session = d.session();
     try {
-      // Unique constraints
       await session.run(
         "CREATE CONSTRAINT chunk_id IF NOT EXISTS FOR (c:Chunk) REQUIRE c.id IS UNIQUE",
       );
       await session.run(
         "CREATE CONSTRAINT entity_id IF NOT EXISTS FOR (e:Entity) REQUIRE e.id IS UNIQUE",
       );
-      // Vector index for future Neo4j 5.x native vector support
-      // Full-text index for entity name search
       await session.run(`
         CREATE FULLTEXT INDEX entity_name_idx IF NOT EXISTS
         FOR (e:Entity) ON EACH [e.name]
@@ -46,7 +56,7 @@ export class GraphStore {
 
   /** Upsert a document chunk into the graph. */
   async upsertChunk(chunk: Chunk): Promise<void> {
-    const session = this.driver.session();
+    const session = this.driver().session();
     try {
       await session.run(
         `
@@ -73,7 +83,7 @@ export class GraphStore {
 
   /** Upsert an entity and link it to the chunks it was extracted from. */
   async upsertEntity(entity: Entity, chunkIds: string[]): Promise<void> {
-    const session = this.driver.session();
+    const session = this.driver().session();
     try {
       await session.run(
         `
@@ -101,7 +111,7 @@ export class GraphStore {
 
   /** Create a typed relationship between two entities. */
   async upsertRelationship(rel: Relationship): Promise<void> {
-    const session = this.driver.session();
+    const session = this.driver().session();
     try {
       await session.run(
         `
@@ -125,15 +135,15 @@ export class GraphStore {
   }
 
   /**
-   * Graph-based retrieval: find chunks connected to entities whose names
-   * match the query (full-text), then traverse up to `hops` hops.
+   * Graph retrieval: full-text search on entity names → traverse up to
+   * `hops` relationship hops → collect connected chunks.
    */
   async retrieveByEntities(
     query: string,
     topK: number,
-    hops: number = 2,
+    hops = 2,
   ): Promise<Array<{ chunk: Chunk; entities: Entity[]; path: string[] }>> {
-    const session = this.driver.session();
+    const session = this.driver().session();
     try {
       const result = await session.run(
         `
@@ -142,7 +152,6 @@ export class GraphStore {
         WITH startEntity, score
         ORDER BY score DESC
         LIMIT 10
-        // Traverse up to $hops hops
         MATCH path = (startEntity)-[:RELATES_TO*0..$hops]-(relatedEntity:Entity)
         WITH collect(DISTINCT relatedEntity) AS entities, startEntity
         UNWIND entities AS entity
@@ -181,11 +190,7 @@ export class GraphStore {
           metadata: safeParseJson(rec.get("metadata") as string),
         };
 
-        return {
-          chunk,
-          entities,
-          path: entities.map((e) => e.name),
-        };
+        return { chunk, entities, path: entities.map((e) => e.name) };
       });
     } finally {
       await session.close();
@@ -194,7 +199,7 @@ export class GraphStore {
 
   /** Delete all chunks and entities for a document. */
   async deleteDocument(documentId: string): Promise<void> {
-    const session = this.driver.session();
+    const session = this.driver().session();
     try {
       await session.run(
         `
@@ -210,7 +215,8 @@ export class GraphStore {
   }
 
   async close(): Promise<void> {
-    await this.driver.close();
+    await this._driver?.close();
+    this._driver = null;
   }
 }
 

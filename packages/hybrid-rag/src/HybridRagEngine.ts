@@ -69,7 +69,7 @@ export class HybridRagEngine {
    *   6. If small enough, preload into CAG cache
    */
   async ingest(document: Document): Promise<void> {
-    this.assertInitialized();
+    await this.initialize();
 
     const chunks = chunkText(document).map((c) => ({
       ...c,
@@ -98,7 +98,7 @@ export class HybridRagEngine {
   // ─── Retrieve ─────────────────────────────────────────────────────────────
 
   async retrieve(query: RetrievalQuery): Promise<RetrievalResponse> {
-    this.assertInitialized();
+    await this.initialize();
     const start = Date.now();
     const topK = query.topK ?? 5;
     const mode = query.mode ?? "hybrid";
@@ -119,6 +119,7 @@ export class HybridRagEngine {
   // ─── Delete ───────────────────────────────────────────────────────────────
 
   async deleteDocument(documentId: string): Promise<void> {
+    await this.initialize();
     await Promise.all([
       this.graph.deleteDocument(documentId),
       this.vector.deleteByDocument(documentId),

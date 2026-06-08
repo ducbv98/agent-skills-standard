@@ -9,7 +9,7 @@ const EnvSchema = z.object({
   QDRANT_URL: z.string().default("http://localhost:6333"),
   QDRANT_COLLECTION: z.string().default("hybrid_rag"),
   QDRANT_API_KEY: z.string().optional(),
-  OPENAI_API_KEY: z.string(),
+  OPENAI_API_KEY: z.string().default(""),
   OPENAI_BASE_URL: z.string().default("https://api.openai.com/v1"),
   EMBEDDING_MODEL: z.string().default("text-embedding-3-small"),
   EMBEDDING_DIMENSIONS: z.coerce.number().default(1536),
