@@ -1,4 +1,2 @@
 packages:
-  - 'cli'
-  - 'server'
-  - 'mcp'
+  - "packages/*"
