@@ -57,8 +57,13 @@ export function subscribeJob(
   return () => job.emitter.off("event", listener);
 }
 
+export interface JobOptions {
+  removeSubs?: boolean;
+  subsHeightRatio?: number;
+}
+
 /** Create + start a new dub job. Returns job id immediately, pipeline runs async. */
-export function createJob(url: string): Job {
+export function createJob(url: string, opts: JobOptions = {}): Job {
   const id = randomUUID();
   const job: InternalJob = {
     id,
@@ -71,13 +76,13 @@ export function createJob(url: string): Job {
   jobs.set(id, job);
 
   // Run pipeline async — không await
-  void runJob(job);
+  void runJob(job, opts);
 
   const { emitter: _emitter, ...publicView } = job;
   return publicView;
 }
 
-async function runJob(job: InternalJob): Promise<void> {
+async function runJob(job: InternalJob, opts: JobOptions): Promise<void> {
   job.status = "running";
 
   const onProgress = (event: ProgressEvent): void => {
@@ -86,7 +91,11 @@ async function runJob(job: InternalJob): Promise<void> {
   };
 
   try {
-    const config = buildConfig({ url: job.url });
+    const config = buildConfig({
+      url: job.url,
+      removeSubs: opts.removeSubs,
+      subsHeightRatio: opts.subsHeightRatio,
+    });
     const result = await runPipeline(config, onProgress);
     job.outputPath = result.outputPath;
     job.outputFileName = path.basename(result.outputPath);

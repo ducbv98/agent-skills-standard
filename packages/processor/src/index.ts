@@ -22,6 +22,10 @@ export interface ProcessorOptions {
   muteOriginal?: boolean;
   /** Volume của track gốc nếu không mute (0.0 - 1.0). Mặc định 0.1 */
   originalVolume?: number;
+  /** Blur dải đáy video để che phụ đề hardcoded (mặc định false) */
+  removeSubs?: boolean;
+  /** Tỷ lệ chiều cao dải subs ở đáy (0-1, mặc định 0.18) */
+  subsHeightRatio?: number;
 }
 
 /** Chạy ffmpeg và đợi kết thúc */
@@ -112,10 +116,29 @@ async function buildTimedAudioTrack(
     inputs.push("-i", seg.audioPath);
 
     const delayMs = Math.max(0, Math.round(seg.start * 1000));
-    // adelay cần truyền cho mỗi channel: dùng "all" để áp dụng cho tất cả channels
-    // apad pad_dur để đảm bảo đủ dài video — tránh amix kết thúc sớm
+    const segDurSec = seg.end - seg.start;
+    const ttsDurSec = seg.durationMs / 1000;
+
+    // Co giãn tốc độ đọc để TTS vừa khít khoảng [start, end]
+    // atempo chỉ hỗ trợ 0.5–2.0 mỗi filter, chain 2 filter nếu ngoài range
+    let atempoFilter = "";
+    if (segDurSec > 0 && ttsDurSec > 0) {
+      const ratio = ttsDurSec / segDurSec;
+      if (ratio > 4.0) {
+        atempoFilter = `atempo=2.0,atempo=2.0,`;
+      } else if (ratio > 2.0) {
+        atempoFilter = `atempo=2.0,atempo=${(ratio / 2.0).toFixed(4)},`;
+      } else if (ratio < 0.25) {
+        atempoFilter = `atempo=0.5,atempo=0.5,`;
+      } else if (ratio < 0.5) {
+        atempoFilter = `atempo=0.5,atempo=${(ratio / 0.5).toFixed(4)},`;
+      } else {
+        atempoFilter = `atempo=${ratio.toFixed(4)},`;
+      }
+    }
+
     filterParts.push(
-      `[${i}:a]adelay=${delayMs}|${delayMs},apad=whole_dur=${videoDurationSec}[a${i}]`,
+      `[${i}:a]${atempoFilter}adelay=${delayMs}|${delayMs},apad=whole_dur=${videoDurationSec}[a${i}]`,
     );
     mixLabels.push(`[a${i}]`);
   }
@@ -158,6 +181,8 @@ export async function buildDubbedVideo(
   const ffprobeBin = ffmpegBin === "ffmpeg" ? "ffprobe" : ffmpegBin.replace(/ffmpeg(\.exe)?$/i, "ffprobe$1");
   const muteOriginal = options.muteOriginal ?? true;
   const originalVolume = options.originalVolume ?? 0.1;
+  const removeSubs = options.removeSubs ?? false;
+  const subsRatio = Math.min(Math.max(options.subsHeightRatio ?? 0.18, 0.05), 0.4);
 
   fs.mkdirSync(options.workDir, { recursive: true });
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });
@@ -171,59 +196,48 @@ export async function buildDubbedVideo(
   );
   await buildTimedAudioTrack(segments, videoDurationSec, ttsTrackPath, ffmpegBin);
 
-  // Step 2: merge video + tts audio (+ optional original audio at low volume)
-  if (muteOriginal) {
-    // Đơn giản: copy video, dùng tts làm audio chính
-    await runFfmpeg(
-      [
-        "-y",
-        "-i",
-        videoPath,
-        "-i",
-        ttsTrackPath,
-        "-map",
-        "0:v:0",
-        "-map",
-        "1:a:0",
-        "-c:v",
-        "copy",
-        "-c:a",
-        "aac",
-        "-b:a",
-        "192k",
-        "-shortest",
-        outputPath,
-      ],
-      ffmpegBin,
-    );
-  } else {
-    // Mix: original audio nhỏ + TTS lớn
-    const filter = `[0:a]volume=${originalVolume.toFixed(2)}[orig];[orig][1:a]amix=inputs=2:duration=longest:normalize=0[aout]`;
-    await runFfmpeg(
-      [
-        "-y",
-        "-i",
-        videoPath,
-        "-i",
-        ttsTrackPath,
-        "-filter_complex",
-        filter,
-        "-map",
-        "0:v:0",
-        "-map",
-        "[aout]",
-        "-c:v",
-        "copy",
-        "-c:a",
-        "aac",
-        "-b:a",
-        "192k",
-        "-shortest",
-        outputPath,
-      ],
-      ffmpegBin,
-    );
+  // Filter graph cho việc che subs ở đáy:
+  // - Split video thành 2 nhánh
+  // - Nhánh 1: crop bottom strip, boxblur mạnh
+  // - Nhánh 2: video gốc
+  // - Overlay strip blurred lên đúng vị trí đáy
+  const subY = (1 - subsRatio).toFixed(4);
+  const blurVideoFilter = removeSubs
+    ? `[0:v]split=2[vmain][vblur];[vblur]crop=iw:ih*${subsRatio.toFixed(4)}:0:ih*${subY},boxblur=20:5[blurred];[vmain][blurred]overlay=0:H*${subY}[vout]`
+    : null;
+
+  // Audio filter (nếu cần mix original)
+  const audioFilter = muteOriginal
+    ? null
+    : `[0:a]volume=${originalVolume.toFixed(2)}[orig];[orig][1:a]amix=inputs=2:duration=longest:normalize=0[aout]`;
+
+  const filters: string[] = [];
+  if (blurVideoFilter) filters.push(blurVideoFilter);
+  if (audioFilter) filters.push(audioFilter);
+
+  const args: string[] = ["-y", "-i", videoPath, "-i", ttsTrackPath];
+
+  if (filters.length > 0) {
+    args.push("-filter_complex", filters.join(";"));
   }
+
+  // Video mapping + codec
+  if (removeSubs) {
+    // Re-encode vì có filter
+    args.push("-map", "[vout]", "-c:v", "libx264", "-preset", "fast", "-crf", "22");
+  } else {
+    args.push("-map", "0:v:0", "-c:v", "copy");
+  }
+
+  // Audio mapping + codec
+  if (audioFilter) {
+    args.push("-map", "[aout]");
+  } else {
+    args.push("-map", "1:a:0");
+  }
+  args.push("-c:a", "aac", "-b:a", "192k", "-t", videoDurationSec.toFixed(3), outputPath);
+
+  await runFfmpeg(args, ffmpegBin);
 
   const finalDuration = await probeDurationSec(outputPath, ffprobeBin);
   const title = path.basename(outputPath, path.extname(outputPath));

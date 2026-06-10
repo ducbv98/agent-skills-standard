@@ -36,12 +36,20 @@ await app.register(fastifyStatic, {
 
 // === API ===
 
-app.post<{ Body: { url?: string } }>("/api/jobs", async (req, reply) => {
+app.post<{
+  Body: { url?: string; removeSubs?: boolean; subsHeightRatio?: number };
+}>("/api/jobs", async (req, reply) => {
   const url = req.body?.url?.trim();
   if (!url) {
     return reply.status(400).send({ error: "Missing url" });
   }
-  const job = createJob(url);
+  const job = createJob(url, {
+    removeSubs: req.body?.removeSubs === true,
+    subsHeightRatio:
+      typeof req.body?.subsHeightRatio === "number"
+        ? req.body.subsHeightRatio
+        : undefined,
+  });
   return { id: job.id, url: job.url, status: job.status };
 });
 

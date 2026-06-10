@@ -24,6 +24,8 @@ export interface CliArgs {
   keepTmp?: boolean;
   cookiesFromBrowser?: "chrome" | "firefox" | "edge";
   cookiesFile?: string;
+  removeSubs?: boolean;
+  subsHeightRatio?: number;
   help?: boolean;
 }
 
@@ -79,6 +81,16 @@ export function parseArgs(argv: string[]): CliArgs {
       case "keep-tmp":
         args.keepTmp = true;
         break;
+      case "remove-subs":
+      case "no-subs":
+        args.removeSubs = true;
+        break;
+      case "subs-height":
+      case "subs-ratio": {
+        const n = value ? Number.parseFloat(value) : NaN;
+        if (!Number.isNaN(n) && n > 0 && n < 1) args.subsHeightRatio = n;
+        break;
+      }
       case "cookies-from-browser":
         if (value === "chrome" || value === "firefox" || value === "edge") {
           args.cookiesFromBrowser = value;
@@ -112,6 +124,8 @@ Options:
   --work-dir <dir>            Thư mục tạm intermediate (default: ./tmp)
   --cookies-from-browser <b>  chrome|firefox|edge — auto load cookies
   --cookies <file>            File cookies.txt thủ công
+  --remove-subs               Blur dải đáy để che phụ đề hardcoded
+  --subs-height <ratio>       Tỷ lệ chiều cao dải subs 0.05-0.4 (default 0.18)
   --keep-tmp                  Giữ thư mục tạm sau khi xong
   --help, -h                  In help này
 
@@ -183,6 +197,13 @@ export function buildConfig(args: CliArgs): ResolvedConfig {
     ytdlpPath,
     edgeTtsPath,
     keepTmp: args.keepTmp ?? false,
+    removeSubs:
+      args.removeSubs ??
+      ["1", "true", "yes", "on"].includes((process.env.REMOVE_SUBS ?? "").toLowerCase()),
+    subsHeightRatio:
+      args.subsHeightRatio ??
+      Number.parseFloat(process.env.SUBS_HEIGHT_RATIO ?? "0.18") ??
+      0.18,
     cookiesFromBrowser: args.cookiesFromBrowser,
     cookiesFile: args.cookiesFile,
   };

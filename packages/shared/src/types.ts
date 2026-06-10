@@ -65,6 +65,10 @@ export interface PipelineConfig {
   ytdlpPath: string;
   edgeTtsPath: string;
   keepTmp: boolean;
+  /** Blur dải đáy video để che phụ đề hardcoded (mặc định false) */
+  removeSubs: boolean;
+  /** Tỷ lệ chiều cao dải subs (0-1, mặc định 0.18) */
+  subsHeightRatio: number;
 }
 
 /** Progress event để log */

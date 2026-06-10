@@ -2,6 +2,7 @@
 
 const form = document.getElementById("url-form");
 const urlInput = document.getElementById("url-input");
+const removeSubsInput = document.getElementById("remove-subs");
 const submitBtn = document.getElementById("submit-btn");
 const formHint = document.getElementById("form-hint");
 const progressCard = document.getElementById("progress-card");
@@ -48,7 +49,7 @@ function showError(message) {
   errorBox.classList.remove("hidden");
 }
 
-async function startJob(url) {
+async function startJob(url, removeSubs) {
   resetUI();
   submitBtn.disabled = true;
   submitBtn.textContent = "Đang xử lý...";
@@ -60,7 +61,7 @@ async function startJob(url) {
     const resp = await fetch("/api/jobs", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ url }),
+      body: JSON.stringify({ url, removeSubs }),
     });
     if (!resp.ok) {
       const body = await resp.json().catch(() => ({}));
@@ -144,5 +145,5 @@ form.addEventListener("submit", (e) => {
   e.preventDefault();
   const url = urlInput.value.trim();
   if (!url) return;
-  startJob(url);
+  startJob(url, removeSubsInput?.checked === true);
 });

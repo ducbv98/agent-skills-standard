@@ -3,7 +3,10 @@
     "allow": [
       "Bash(curl -sS -X POST http://127.0.0.1:3000/api/jobs -H \"Content-Type: application/json\" -d '{\"url\":\"https://www.youtube.com/watch?v=gf8CrM-OUCg\"}')",
       "Bash(curl -sS -N --max-time 180 http://127.0.0.1:3000/api/jobs/e9ceda01-62e3-4f36-9513-519ccba2edb3/events)",
-      "Bash(pnpm web *)"
+      "Bash(pnpm web *)",
+      "Bash(python -c \"import sys, json; data=json.load\\(sys.stdin\\); [print\\(j['id'][:8], j['status'], len\\(j.get\\('events',[]\\)\\)\\) for j in data['jobs']]\")",
+      "Bash(pnpm --filter @viet-dubber/translator build)",
+      "Bash(curl -sS -X POST http://127.0.0.1:3000/api/jobs -H \"Content-Type: application/json\" -d '{\"url\":\"https://www.youtube.com/watch?v=gf8CrM-OUCg\",\"removeSubs\":true}')"
     ]
   }
 }

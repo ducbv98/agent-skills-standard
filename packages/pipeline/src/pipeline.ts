@@ -154,6 +154,8 @@ export async function runPipeline(
       ffmpegPath: config.ffmpegPath,
       workDir: runWorkDir,
       muteOriginal: true,
+      removeSubs: config.removeSubs,
+      subsHeightRatio: config.subsHeightRatio,
     },
   );
   onProgress({
