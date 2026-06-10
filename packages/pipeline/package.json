@@ -1,0 +1,31 @@
+{
+  "name": "@viet-dubber/pipeline",
+  "version": "1.0.0",
+  "type": "module",
+  "exports": {
+    ".": { "import": "./dist/index.js", "types": "./dist/index.d.ts" }
+  },
+  "bin": {
+    "viet-dubber": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit",
+    "dev": "tsx src/cli.ts",
+    "start": "node --experimental-strip-types src/cli.ts"
+  },
+  "dependencies": {
+    "@viet-dubber/shared": "workspace:*",
+    "@viet-dubber/downloader": "workspace:*",
+    "@viet-dubber/transcriber": "workspace:*",
+    "@viet-dubber/translator": "workspace:*",
+    "@viet-dubber/tts": "workspace:*",
+    "@viet-dubber/processor": "workspace:*",
+    "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.30",
+    "typescript": "^5.9.3",
+    "tsx": "^4.19.2"
+  }
+}

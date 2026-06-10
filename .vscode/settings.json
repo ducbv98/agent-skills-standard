@@ -7,5 +7,6 @@
   "[markdown]": {
     "editor.formatOnSave": true,
     "editor.formatOnPaste": true
-  }
+  },
+  "liveServer.settings.multiRootWorkspaceName": "agent-skills-standard"
 }

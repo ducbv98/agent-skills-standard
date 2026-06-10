@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -sS -X POST http://127.0.0.1:3000/api/jobs -H \"Content-Type: application/json\" -d '{\"url\":\"https://www.youtube.com/watch?v=gf8CrM-OUCg\"}')",
+      "Bash(curl -sS -N --max-time 180 http://127.0.0.1:3000/api/jobs/e9ceda01-62e3-4f36-9513-519ccba2edb3/events)",
+      "Bash(pnpm web *)"
+    ]
+  }
+}

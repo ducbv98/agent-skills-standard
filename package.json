@@ -9,8 +9,10 @@
   },
   "scripts": {
     "build": "pnpm -r build",
-    "dev": "pnpm --filter pipeline dev",
-    "dub": "pnpm --filter pipeline start",
+    "dev": "pnpm --filter @viet-dubber/pipeline dev",
+    "dub": "pnpm --filter @viet-dubber/pipeline start",
+    "web": "pnpm --filter @viet-dubber/web dev",
+    "web:start": "pnpm --filter @viet-dubber/web start",
     "typecheck": "pnpm -r typecheck",
     "lint": "pnpm -r lint",
     "format": "pnpm -r format"

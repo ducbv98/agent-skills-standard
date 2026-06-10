@@ -54,6 +54,7 @@ export interface PipelineConfig {
   voice: string;
   ttsRate: string;
   ttsVolume: string;
+  inputDir: string;
   outputDir: string;
   workDir: string;
   whisperModel: string;
@@ -80,4 +81,6 @@ export interface ProgressEvent {
   step: PipelineStep;
   message: string;
   percent?: number;
+  /** start = bắt đầu step, done = step xong, error = lỗi (chỉ ở step "done" tổng) */
+  status?: "start" | "done" | "error";
 }

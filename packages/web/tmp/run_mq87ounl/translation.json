@@ -1,0 +1,1157 @@
+{
+  "segments": [
+    {
+      "start": 0,
+      "end": 1.4,
+      "original": "好",
+      "translated": "好"
+    },
+    {
+      "start": 1.4,
+      "end": 1.9599999,
+      "original": "谢谢",
+      "translated": "谢谢"
+    },
+    {
+      "start": 1.9599999,
+      "end": 2.6399999,
+      "original": "谢谢",
+      "translated": "谢谢"
+    },
+    {
+      "start": 2.6399999,
+      "end": 3.6399999,
+      "original": "谢谢",
+      "translated": "谢谢"
+    },
+    {
+      "start": 3.6399999,
+      "end": 5.2,
+      "original": "我是",
+      "translated": "我是"
+    },
+    {
+      "start": 5.2,
+      "end": 6.2,
+      "original": "我们的",
+      "translated": "我们的"
+    },
+    {
+      "start": 6.2,
+      "end": 6.8399997,
+      "original": "说什么",
+      "translated": "说什么"
+    },
+    {
+      "start": 6.8399997,
+      "end": 7.3599997,
+      "original": "事宜",
+      "translated": "事宜"
+    },
+    {
+      "start": 7.3599997,
+      "end": 7.68,
+      "original": "不就放到",
+      "translated": "不就放到"
+    },
+    {
+      "start": 7.68,
+      "end": 8.5199995,
+      "original": "两个小时",
+      "translated": "两个小时"
+    },
+    {
+      "start": 8.5199995,
+      "end": 9.16,
+      "original": "你都没有",
+      "translated": "你都没有"
+    },
+    {
+      "start": 9.16,
+      "end": 9.92,
+      "original": "是",
+      "translated": "是"
+    },
+    {
+      "start": 9.92,
+      "end": 10.719999,
+      "original": "那他就是",
+      "translated": "那他就是"
+    },
+    {
+      "start": 10.719999,
+      "end": 11.44,
+      "original": "那我",
+      "translated": "那我"
+    },
+    {
+      "start": 11.44,
+      "end": 11.639999,
+      "original": "没看到",
+      "translated": "没看到"
+    },
+    {
+      "start": 11.639999,
+      "end": 12.44,
+      "original": "他就是",
+      "translated": "他就是"
+    },
+    {
+      "start": 12.44,
+      "end": 12.719999,
+      "original": "他不就是",
+      "translated": "他不就是"
+    },
+    {
+      "start": 12.719999,
+      "end": 13.16,
+      "original": "人家",
+      "translated": "人家"
+    },
+    {
+      "start": 13.16,
+      "end": 13.96,
+      "original": "来",
+      "translated": "来"
+    },
+    {
+      "start": 13.96,
+      "end": 14.2,
+      "original": "那我",
+      "translated": "那我"
+    },
+    {
+      "start": 14.2,
+      "end": 14.599999,
+      "original": "都没看",
+      "translated": "都没看"
+    },
+    {
+      "start": 14.599999,
+      "end": 15.799999,
+      "original": "我",
+      "translated": "我"
+    },
+    {
+      "start": 15.799999,
+      "end": 15.92,
+      "original": "都没看",
+      "translated": "都没看"
+    },
+    {
+      "start": 15.92,
+      "end": 16.76,
+      "original": "我",
+      "translated": "我"
+    },
+    {
+      "start": 16.76,
+      "end": 16.92,
+      "original": "我",
+      "translated": "我"
+    },
+    {
+      "start": 16.92,
+      "end": 18.08,
+      "original": "没看",
+      "translated": "没看"
+    },
+    {
+      "start": 18.08,
+      "end": 18.68,
+      "original": "我",
+      "translated": "我"
+    },
+    {
+      "start": 18.68,
+      "end": 19.08,
+      "original": "就有",
+      "translated": "就有"
+    },
+    {
+      "start": 19.08,
+      "end": 19.16,
+      "original": "有",
+      "translated": "有"
+    },
+    {
+      "start": 19.16,
+      "end": 19.16,
+      "original": "",
+      "translated": ""
+    },
+    {
+      "start": 19.16,
+      "end": 19.279999,
+      "original": "我的",
+      "translated": "Của tôi"
+    },
+    {
+      "start": 19.279999,
+      "end": 19.52,
+      "original": "这个",
+      "translated": "Cái này"
+    },
+    {
+      "start": 19.52,
+      "end": 20.68,
+      "original": "很",
+      "translated": "Rất"
+    },
+    {
+      "start": 20.68,
+      "end": 20.9,
+      "original": "什么",
+      "translated": "Gì"
+    },
+    {
+      "start": 20.9,
+      "end": 21.4,
+      "original": "有",
+      "translated": "Có"
+    },
+    {
+      "start": 21.4,
+      "end": 22.8,
+      "original": "他",
+      "translated": "Anh ấy"
+    },
+    {
+      "start": 22.8,
+      "end": 23,
+      "original": "那你",
+      "translated": "Thế bạn"
+    },
+    {
+      "start": 23,
+      "end": 24,
+      "original": "你",
+      "translated": "Bạn"
+    },
+    {
+      "start": 24,
+      "end": 24.8,
+      "original": "那我",
+      "translated": "Thế tôi"
+    },
+    {
+      "start": 24.8,
+      "end": 25.279999,
+      "original": "你",
+      "translated": "Bạn"
+    },
+    {
+      "start": 25.279999,
+      "end": 25.96,
+      "original": "那我",
+      "translated": "Thế tôi"
+    },
+    {
+      "start": 25.96,
+      "end": 27.039999,
+      "original": "那我",
+      "translated": "Thế tôi"
+    },
+    {
+      "start": 27.359999,
+      "end": 27.92,
+      "original": "那我",
+      "translated": "Thế tôi"
+    },
+    {
+      "start": 27.92,
+      "end": 29.16,
+      "original": "那我",
+      "translated": "Thế tôi"
+    },
+    {
+      "start": 29.16,
+      "end": 29.96,
+      "original": "那我",
+      "translated": "Thế tôi"
+    },
+    {
+      "start": 29.96,
+      "end": 30.679998,
+      "original": "姚洋出师了",
+      "translated": "Yao Yang xuất师"
+    },
+    {
+      "start": 30.679998,
+      "end": 31.519999,
+      "original": "姚洋跳河",
+      "translated": "Yao Yang nhảy sông"
+    },
+    {
+      "start": 31.519999,
+      "end": 32.52,
+      "original": "去 姚洋",
+      "translated": "Đi Yao Yang"
+    },
+    {
+      "start": 32.52,
+      "end": 33.719997,
+      "original": "你上下身子快跳",
+      "translated": "Bạn nhanh chóng nhảy"
+    },
+    {
+      "start": 33.719997,
+      "end": 34.8,
+      "original": "我他会不会跳",
+      "translated": "Tôi anh ấy có nhảy không"
+    },
+    {
+      "start": 40.12,
+      "end": 41.16,
+      "original": "姚洋跳河了",
+      "translated": "Yao Yang đã nhảy sông"
+    },
+    {
+      "start": 41.16,
+      "end": 42.199997,
+      "original": "姚洋跳河了",
+      "translated": "Yao Yang đã nhảy sông"
+    },
+    {
+      "start": 42.199997,
+      "end": 43.36,
+      "original": "姚洋跳河",
+      "translated": "Yao Yang nhảy sông"
+    },
+    {
+      "start": 45.36,
+      "end": 46.879997,
+      "original": "姚洋老师姻姚洋跳河了",
+      "translated": "Giáo viên Yao Yang Yao Yang đã nhảy sông"
+    },
+    {
+      "start": 46.879997,
+      "end": 47.96,
+      "original": "走走走 快点",
+      "translated": "Đi đi đi, nhanh lên"
+    },
+    {
+      "start": 49.32,
+      "end": 50.6,
+      "original": "姚洋跳河了",
+      "translated": "Yao Yang đã nhảy sông"
+    },
+    {
+      "start": 53.079998,
+      "end": 53.68,
+      "original": "快点",
+      "translated": "Nhanh lên"
+    },
+    {
+      "start": 54.399998,
+      "end": 55.68,
+      "original": "在河边 快点",
+      "translated": "Ở bờ sông, nhanh lên"
+    },
+    {
+      "start": 59.96,
+      "end": 60.66,
+      "original": "有个问题",
+      "translated": "Có một vấn đề"
+    },
+    {
+      "start": 62.66,
+      "end": 63.92,
+      "original": "她不知道",
+      "translated": "Cô ấy không biết"
+    },
+    {
+      "start": 64.54,
+      "end": 65.88,
+      "original": "一羊是人",
+      "translated": "一羊是人"
+    },
+    {
+      "start": 66.26,
+      "end": 68.42,
+      "original": "也不说很难",
+      "translated": "也不说很难"
+    },
+    {
+      "start": 68.5,
+      "end": 69.52,
+      "original": "的",
+      "translated": "的"
+    },
+    {
+      "start": 70.92,
+      "end": 72.14,
+      "original": "我的天哪",
+      "translated": "我的天哪"
+    },
+    {
+      "start": 72.22,
+      "end": 73.14,
+      "original": "他就认识了",
+      "translated": "他就认识了"
+    },
+    {
+      "start": 73.22,
+      "end": 74.88,
+      "original": "一羊是人",
+      "translated": "一羊是人"
+    },
+    {
+      "start": 74.88,
+      "end": 75.799995,
+      "original": "我给大家认识",
+      "translated": "我给大家认识"
+    },
+    {
+      "start": 75.88,
+      "end": 76.74,
+      "original": "一羊是人",
+      "translated": "一羊是人"
+    },
+    {
+      "start": 76.94,
+      "end": 78.04,
+      "original": "你自己的",
+      "translated": "你自己的"
+    },
+    {
+      "start": 78.5,
+      "end": 79.94,
+      "original": "你干什么",
+      "translated": "你干什么"
+    },
+    {
+      "start": 80.08,
+      "end": 81.46,
+      "original": "你干什么",
+      "translated": "你干什么"
+    },
+    {
+      "start": 82.42,
+      "end": 83.439995,
+      "original": "你干什么",
+      "translated": "你干什么"
+    },
+    {
+      "start": 84.78,
+      "end": 85.56,
+      "original": "你干什么",
+      "translated": "你干什么"
+    },
+    {
+      "start": 86.799995,
+      "end": 87.74,
+      "original": "真是人",
+      "translated": "真是人"
+    },
+    {
+      "start": 87.9,
+      "end": 88.54,
+      "original": "这个子",
+      "translated": "这个子"
+    },
+    {
+      "start": 88.659996,
+      "end": 89.84,
+      "original": "我对他",
+      "translated": "我对他"
+    },
+    {
+      "start": 89.96,
+      "end": 90.96,
+      "original": "刘河",
+      "translated": "刘河"
+    },
+    {
+      "start": 98.96,
+      "end": 100.36,
+      "original": "到底他是不是凶手啊",
+      "translated": "到底他是不是凶手啊"
+    },
+    {
+      "start": 100.36,
+      "end": 112.048,
+      "original": "杜三香都死了 谁知道啊凶手一定是他 到底是谁不是我我最丢的开杀的不是他是谁啊不是我刚刚你肯定就是他杀的不是我",
+      "translated": "杜三香都死了 谁知道啊凶手一定是他 到底是谁不是我我最丢的开杀的不是他是谁啊不是我刚刚你肯定就是他杀的不是我"
+    },
+    {
+      "start": 112.048,
+      "end": 113.448,
+      "original": "刷手不是他杀的吗",
+      "translated": "刷手不是他杀的吗"
+    },
+    {
+      "start": 113.448,
+      "end": 115.208,
+      "original": "真的不是他",
+      "translated": "真的不是他"
+    },
+    {
+      "start": 115.208,
+      "end": 116.327995,
+      "original": "是他杀的吗",
+      "translated": "是他杀的吗"
+    },
+    {
+      "start": 116.327995,
+      "end": 117.128,
+      "original": "是他杀的",
+      "translated": "是他杀的"
+    },
+    {
+      "start": 117.128,
+      "end": 118.328,
+      "original": "是他杀的",
+      "translated": "是他杀的"
+    },
+    {
+      "start": 118.328,
+      "end": 120.647995,
+      "original": "你肯定就是他杀的",
+      "translated": "你肯定就是他杀的"
+    },
+    {
+      "start": 120.647995,
+      "end": 121.328,
+      "original": "上次在上次",
+      "translated": "上次在上次"
+    },
+    {
+      "start": 121.328,
+      "end": 122.328,
+      "original": "家那个就是他",
+      "translated": "家那个就是他"
+    },
+    {
+      "start": 122.328,
+      "end": 123.048,
+      "original": "就是他",
+      "translated": "就是他"
+    },
+    {
+      "start": 123.048,
+      "end": 123.768,
+      "original": "你肯定就是他杀的",
+      "translated": "你肯定就是他杀的"
+    },
+    {
+      "start": 123.768,
+      "end": 125.528,
+      "original": "你干嘛 你给我杀的",
+      "translated": "你干嘛 你给我杀的"
+    },
+    {
+      "start": 125.528,
+      "end": 126.848,
+      "original": "你不要管我",
+      "translated": "你不要管我"
+    },
+    {
+      "start": 131.488,
+      "end": 132.728,
+      "original": "我没杀过人",
+      "translated": "我没杀过人"
+    },
+    {
+      "start": 132.728,
+      "end": 133.608,
+      "original": "不是他",
+      "translated": "不是他"
+    },
+    {
+      "start": 133.608,
+      "end": 135.248,
+      "original": "专心不是他发达",
+      "translated": "专心不是他发达"
+    },
+    {
+      "start": 135.248,
+      "end": 136.168,
+      "original": "你有人性",
+      "translated": "你有人性"
+    },
+    {
+      "start": 136.168,
+      "end": 137.328,
+      "original": "死那个是你姐",
+      "translated": "死那个是你姐"
+    },
+    {
+      "start": 137.328,
+      "end": 137.84799,
+      "original": "就是",
+      "translated": "就是"
+    },
+    {
+      "start": 137.84799,
+      "end": 139.928,
+      "original": "顾三星",
+      "translated": "顾三星"
+    },
+    {
+      "start": 139.928,
+      "end": 141.048,
+      "original": "你是不是糊涂了",
+      "translated": "你是不是糊涂了"
+    },
+    {
+      "start": 141.048,
+      "end": 143.488,
+      "original": "你们给我闭嘴",
+      "translated": "你们给我闭嘴"
+    },
+    {
+      "start": 143.488,
+      "end": 152.448,
+      "original": "你们没杀过人吧",
+      "translated": "你们没杀过人吧"
+    },
+    {
+      "start": 152.448,
+      "end": 153.568,
+      "original": "我们杀什么人",
+      "translated": "我们杀什么人"
+    },
+    {
+      "start": 153.568,
+      "end": 154.248,
+      "original": "你们今天",
+      "translated": "你们今天"
+    },
+    {
+      "start": 154.248,
+      "end": 157.928,
+      "original": "就会知道杀人是什么滋味",
+      "translated": "就会知道杀人是什么滋味"
+    },
+    {
+      "start": 157.928,
+      "end": 158.888,
+      "original": "你要你要干嘛",
+      "translated": "你要你要干嘛"
+    },
+    {
+      "start": 158.888,
+      "end": 160.12799,
+      "original": "危险你上来",
+      "translated": "危险你上来"
+    },
+    {
+      "start": 160.12799,
+      "end": 161.528,
+      "original": "你不要放我",
+      "translated": "你不要放我"
+    },
+    {
+      "start": 169.288,
+      "end": 170.368,
+      "original": "你们永远都不会承认",
+      "translated": "你们永远都不会承认"
+    },
+    {
+      "start": 170.368,
+      "end": 172.12799,
+      "original": "自己做过的事有多恶毒",
+      "translated": "自己做过的事有多恶毒"
+    },
+    {
+      "start": 174.368,
+      "end": 175.008,
+      "original": "将来",
+      "translated": "将来"
+    },
+    {
+      "start": 175.92801,
+      "end": 176.92801,
+      "original": "你们只会说",
+      "translated": "你们只会说"
+    },
+    {
+      "start": 178.448,
+      "end": 179.448,
+      "original": "我怎么不记得",
+      "translated": "我怎么不记得"
+    },
+    {
+      "start": 181.568,
+      "end": 182.40799,
+      "original": "我怎么不记得",
+      "translated": "我怎么不记得"
+    },
+    {
+      "start": 182.40799,
+      "end": 184.088,
+      "original": "我把红墨水丢到他身上",
+      "translated": "我把红墨水丢到他身上"
+    },
+    {
+      "start": 185.608,
+      "end": 186.888,
+      "original": "我就是闹着玩的呀",
+      "translated": "我就是闹着玩的呀"
+    },
+    {
+      "start": 186.888,
+      "end": 187.84799,
+      "original": "还有你笑",
+      "translated": "还有你笑"
+    },
+    {
+      "start": 188.728,
+      "end": 189.528,
+      "original": "还有你",
+      "translated": "还有你"
+    },
+    {
+      "start": 190.12799,
+      "end": 193.12799,
+      "original": "你会说我没有为他吃过垃圾",
+      "translated": "你会说我没有为他吃过垃圾"
+    },
+    {
+      "start": 193.12799,
+      "end": 195.288,
+      "original": "没有泡过他冷水",
+      "translated": "没有泡过他冷水"
+    },
+    {
+      "start": 195.288,
+      "end": 197.12799,
+      "original": "没有拔过他衣服",
+      "translated": "没有拔过他衣服"
+    },
+    {
+      "start": 197.12799,
+      "end": 202.12799,
+      "original": "你们之后的日子",
+      "translated": "Những ngày sau này của các bạn"
+    },
+    {
+      "start": 202.12799,
+      "end": 205.12799,
+      "original": "舒舒坦坦",
+      "translated": "Thảnh thơi, dễ chịu"
+    },
+    {
+      "start": 205.12799,
+      "end": 207.12799,
+      "original": "没有一点心力负担",
+      "translated": "Không có gánh nặng nào"
+    },
+    {
+      "start": 207.12799,
+      "end": 216.616,
+      "original": "你们回收自己的人生觉得自己挺好的了觉得自己没有做过什么伤天害理的事",
+      "translated": "Các bạn đã lấy lại cuộc sống của mình, cảm thấy mình khá tốt, không làm gì sai trái"
+    },
+    {
+      "start": 218.936,
+      "end": 219.936,
+      "original": "太恶心了",
+      "translated": "Quá đáng ghê tởm"
+    },
+    {
+      "start": 220.856,
+      "end": 222.336,
+      "original": "实在是太恶心了",
+      "translated": "Thật là quá đáng ghê tởm"
+    },
+    {
+      "start": 222.616,
+      "end": 223.856,
+      "original": "他不会是认真的吗",
+      "translated": "Anh ấy có phải là nghiêm túc không"
+    },
+    {
+      "start": 225.056,
+      "end": 226.576,
+      "original": "如果我永远忘不掉",
+      "translated": "Nếu tôi mãi không thể quên"
+    },
+    {
+      "start": 228.216,
+      "end": 229.216,
+      "original": "如果我忘不掉",
+      "translated": "Nếu tôi không thể quên"
+    },
+    {
+      "start": 230.616,
+      "end": 231.776,
+      "original": "怎么被你们欺负",
+      "translated": "Làm thế nào tôi bị các bạn bóc lột"
+    },
+    {
+      "start": 233.536,
+      "end": 234.696,
+      "original": "怎么被你们侮辱",
+      "translated": "Làm thế nào tôi bị các bạn khinh thường"
+    },
+    {
+      "start": 234.696,
+      "end": 239.01599,
+      "original": "粉笔灰塞嘴里是什么滋味",
+      "translated": "Bột phấn nhét vào miệng có vị gì"
+    },
+    {
+      "start": 239.01599,
+      "end": 243.87599,
+      "original": "打火机烧头发是什么滋味",
+      "translated": "Bật lửa đốt tóc có vị gì"
+    },
+    {
+      "start": 243.87599,
+      "end": 246.596,
+      "original": "被你们一口一个一口一个",
+      "translated": "Bị các bạn một miệng một cái"
+    },
+    {
+      "start": 246.596,
+      "end": 248.476,
+      "original": "喊杀人凶手是什么滋味",
+      "translated": "Hét lên giết người có vị gì"
+    },
+    {
+      "start": 248.476,
+      "end": 250.776,
+      "original": "然后我永远忘掉",
+      "translated": "Rồi tôi sẽ mãi quên đi"
+    },
+    {
+      "start": 250.776,
+      "end": 253.816,
+      "original": "你们也别想忘掉",
+      "translated": "Các bạn cũng đừng nghĩ quên"
+    },
+    {
+      "start": 253.816,
+      "end": 256.036,
+      "original": "你们骂过我最难听的词",
+      "translated": "Các bạn đã chửi tôi những lời khó nghe nhất"
+    },
+    {
+      "start": 256.036,
+      "end": 258.276,
+      "original": "编过最下流的绰号",
+      "translated": "Đã đặt cho tôi những biệt danh thô tục nhất"
+    },
+    {
+      "start": 258.276,
+      "end": 263.25598,
+      "original": "你们动手的没动手的都一样",
+      "translated": "Các bạn, dù có động tay hay không, đều giống nhau"
+    },
+    {
+      "start": 264.25598,
+      "end": 266.016,
+      "original": "你们比石头还冷吗",
+      "translated": "Các bạn lạnh lùng hơn đá không"
+    },
+    {
+      "start": 267.376,
+      "end": 269.136,
+      "original": "你们又恶毒又愚蠢",
+      "translated": "Các bạn độc ác và ngu dốt"
+    },
+    {
+      "start": 269.136,
+      "end": 270.176,
+      "original": "你们胆小怕失",
+      "translated": "Các bạn hèn hạ, sợ mất mát"
+    },
+    {
+      "start": 270.176,
+      "end": 270.896,
+      "original": "别人做什么",
+      "translated": "Người khác làm gì"
+    },
+    {
+      "start": 270.896,
+      "end": 272.016,
+      "original": "你们就跟着做什么",
+      "translated": "Các bạn theo sát làm gì"
+    },
+    {
+      "start": 272.016,
+      "end": 274.136,
+      "original": "你们巴不得世界上多死一个人",
+      "translated": "Các bạn mong muốn trên thế giới này có thêm một người chết"
+    },
+    {
+      "start": 274.136,
+      "end": 275.776,
+      "original": "因为你们的日子真的无聊",
+      "translated": "Bởi vì cuộc sống của các bạn thật nhàm chán"
+    },
+    {
+      "start": 276.376,
+      "end": 277.25598,
+      "original": "因为你们觉得自己",
+      "translated": "Bởi vì các bạn cảm thấy mình"
+    },
+    {
+      "start": 277.25598,
+      "end": 278.69598,
+      "original": "不会承担任何后果",
+      "translated": "sẽ không gánh chịu bất kỳ hậu quả nào"
+    },
+    {
+      "start": 281.776,
+      "end": 283.376,
+      "original": "杀死顾森乡的凶手",
+      "translated": "Kẻ giết người ở làng Cựu Lâm"
+    },
+    {
+      "start": 285.096,
+      "end": 286.176,
+      "original": "我不知道是谁",
+      "translated": "我不知道是谁"
+    },
+    {
+      "start": 291.25598,
+      "end": 292.81598,
+      "original": "但杀死顾森乡的凶手",
+      "translated": "但杀死顾森乡的凶手"
+    },
+    {
+      "start": 293.25598,
+      "end": 296.25598,
+      "original": "你们知道是谁",
+      "translated": "你们知道是谁"
+    },
+    {
+      "start": 296.25598,
+      "end": 299.25598,
+      "original": "是药药救护",
+      "translated": "是药药救护"
+    },
+    {
+      "start": 299.25598,
+      "end": 300.25598,
+      "original": "药",
+      "translated": "药"
+    },
+    {
+      "start": 300.25598,
+      "end": 302.25598,
+      "original": "药",
+      "translated": "药"
+    },
+    {
+      "start": 306.25598,
+      "end": 307.25598,
+      "original": "药",
+      "translated": "药"
+    },
+    {
+      "start": 307.25598,
+      "end": 308.25598,
+      "original": "药",
+      "translated": "药"
+    },
+    {
+      "start": 308.25598,
+      "end": 309.25598,
+      "original": "药",
+      "translated": "药"
+    },
+    {
+      "start": 309.25598,
+      "end": 310.25598,
+      "original": "药",
+      "translated": "药"
+    },
+    {
+      "start": 310.25598,
+      "end": 311.25598,
+      "original": "药",
+      "translated": "药"
+    },
+    {
+      "start": 311.25598,
+      "end": 312.25598,
+      "original": "药",
+      "translated": "药"
+    },
+    {
+      "start": 312.25598,
+      "end": 313.25598,
+      "original": "药",
+      "translated": "药"
+    },
+    {
+      "start": 313.25598,
+      "end": 314.25598,
+      "original": "药",
+      "translated": "药"
+    },
+    {
+      "start": 314.25598,
+      "end": 343.384,
+      "original": "药药药药药药药药优优独播剧场——YoYo Television Series Exclusive我再接我将在冬日的黎明厨房",
+      "translated": "药药药药药药药药优优独播剧场——YoYo Television Series Exclusive我再接我将在冬日的黎明厨房"
+    },
+    {
+      "start": 343.384,
+      "end": 345.04398,
+      "original": "我们什么都没做",
+      "translated": "我们什么都没做"
+    },
+    {
+      "start": 345.04398,
+      "end": 346.36398,
+      "original": "这不怪我又是呀",
+      "translated": "这不怪我又是呀"
+    },
+    {
+      "start": 346.36398,
+      "end": 346.76398,
+      "original": "不再",
+      "translated": "不再"
+    },
+    {
+      "start": 375.04398,
+      "end": 377.04398,
+      "original": "老师",
+      "translated": "老师"
+    },
+    {
+      "start": 377.04398,
+      "end": 378.04398,
+      "original": "再见",
+      "translated": "再见"
+    },
+    {
+      "start": 378.04398,
+      "end": 380.04398,
+      "original": "青春",
+      "translated": "青春"
+    },
+    {
+      "start": 380.04398,
+      "end": 383.04398,
+      "original": "遥远的幻想",
+      "translated": "遥远的幻想"
+    },
+    {
+      "start": 383.04398,
+      "end": 384.04398,
+      "original": "来",
+      "translated": "来"
+    },
+    {
+      "start": 384.04398,
+      "end": 385.04398,
+      "original": "来",
+      "translated": "来"
+    },
+    {
+      "start": 385.04398,
+      "end": 386.04398,
+      "original": "来",
+      "translated": "来"
+    },
+    {
+      "start": 386.04398,
+      "end": 387.04398,
+      "original": "再见",
+      "translated": "再见"
+    },
+    {
+      "start": 387.04398,
+      "end": 388.04398,
+      "original": "青春",
+      "translated": "青春"
+    },
+    {
+      "start": 388.04398,
+      "end": 389.04398,
+      "original": "再见",
+      "translated": "再见"
+    },
+    {
+      "start": 389.04398,
+      "end": 391.04398,
+      "original": "灿烂的游戏",
+      "translated": "灿烂的游戏"
+    },
+    {
+      "start": 391.04398,
+      "end": 392.04398,
+      "original": "来",
+      "translated": "来"
+    },
+    {
+      "start": 392.04398,
+      "end": 393.04398,
+      "original": "来",
+      "translated": "Đi"
+    },
+    {
+      "start": 393.04398,
+      "end": 394.04398,
+      "original": "再见",
+      "translated": "Tạm biệt"
+    },
+    {
+      "start": 394.04398,
+      "end": 395.04398,
+      "original": "李耀",
+      "translated": "Lý Diệu"
+    },
+    {
+      "start": 395.04398,
+      "end": 396.04398,
+      "original": "李耀",
+      "translated": "Lý Diệu"
+    },
+    {
+      "start": 396.04398,
+      "end": 397.04398,
+      "original": "李耀",
+      "translated": "Lý Diệu"
+    },
+    {
+      "start": 397.04398,
+      "end": 398.04398,
+      "original": "快",
+      "translated": "Nhanh"
+    },
+    {
+      "start": 398.04398,
+      "end": 399.04398,
+      "original": "上次下120",
+      "translated": "Lần trước xuống 120"
+    },
+    {
+      "start": 399.04398,
+      "end": 400.04398,
+      "original": "打120",
+      "translated": "Đánh 120"
+    },
+    {
+      "start": 400.04398,
+      "end": 401.04398,
+      "original": "打120",
+      "translated": "Đánh 120"
+    },
+    {
+      "start": 401.04398,
+      "end": 403.04398,
+      "original": "再见",
+      "translated": "Tạm biệt"
+    },
+    {
+      "start": 403.044,
+      "end": 408.36398,
+      "original": "青春再见贪婪的忧伤",
+      "translated": "Thời thanh xuân tạm biệt nỗi buồn tham lam"
+    },
+    {
+      "start": 408.36398,
+      "end": 415.64398,
+      "original": "再见青春永恒的迷惘",
+      "translated": "Tạm biệt thời thanh xuân, sự mê muội vĩnh cửu"
+    }
+  ],
+  "fullText": "好 谢谢 谢谢 谢谢 我是 我们的 说什么 事宜 不就放到 两个小时 你都没有 是 那他就是 那我 没看到 他就是 他不就是 人家 来 那我 都没看 我 都没看 我 我 没看 我 就有 有  Của tôi Cái này Rất Gì Có Anh ấy Thế bạn Bạn Thế tôi Bạn Thế tôi Thế tôi Thế tôi Thế tôi Thế tôi Yao Yang xuất师 Yao Yang nhảy sông Đi Yao Yang Bạn nhanh chóng nhảy Tôi anh ấy có nhảy không Yao Yang đã nhảy sông Yao Yang đã nhảy sông Yao Yang nhảy sông Giáo viên Yao Yang Yao Yang đã nhảy sông Đi đi đi, nhanh lên Yao Yang đã nhảy sông Nhanh lên Ở bờ sông, nhanh lên Có một vấn đề Cô ấy không biết 一羊是人 也不说很难 的 我的天哪 他就认识了 一羊是人 我给大家认识 一羊是人 你自己的 你干什么 你干什么 你干什么 你干什么 真是人 这个子 我对他 刘河 到底他是不是凶手啊 杜三香都死了 谁知道啊凶手一定是他 到底是谁不是我我最丢的开杀的不是他是谁啊不是我刚刚你肯定就是他杀的不是我 刷手不是他杀的吗 真的不是他 是他杀的吗 是他杀的 是他杀的 你肯定就是他杀的 上次在上次 家那个就是他 就是他 你肯定就是他杀的 你干嘛 你给我杀的 你不要管我 我没杀过人 不是他 专心不是他发达 你有人性 死那个是你姐 就是 顾三星 你是不是糊涂了 你们给我闭嘴 你们没杀过人吧 我们杀什么人 你们今天 就会知道杀人是什么滋味 你要你要干嘛 危险你上来 你不要放我 你们永远都不会承认 自己做过的事有多恶毒 将来 你们只会说 我怎么不记得 我怎么不记得 我把红墨水丢到他身上 我就是闹着玩的呀 还有你笑 还有你 你会说我没有为他吃过垃圾 没有泡过他冷水 没有拔过他衣服 Những ngày sau này của các bạn Thảnh thơi, dễ chịu Không có gánh nặng nào Các bạn đã lấy lại cuộc sống của mình, cảm thấy mình khá tốt, không làm gì sai trái Quá đáng ghê tởm Thật là quá đáng ghê tởm Anh ấy có phải là nghiêm túc không Nếu tôi mãi không thể quên Nếu tôi không thể quên Làm thế nào tôi bị các bạn bóc lột Làm thế nào tôi bị các bạn khinh thường Bột phấn nhét vào miệng có vị gì Bật lửa đốt tóc có vị gì Bị các bạn một miệng một cái Hét lên giết người có vị gì Rồi tôi sẽ mãi quên đi Các bạn cũng đừng nghĩ quên Các bạn đã chửi tôi những lời khó nghe nhất Đã đặt cho tôi những biệt danh thô tục nhất Các bạn, dù có động tay hay không, đều giống nhau Các bạn lạnh lùng hơn đá không Các bạn độc ác và ngu dốt Các bạn hèn hạ, sợ mất mát Người khác làm gì Các bạn theo sát làm gì Các bạn mong muốn trên thế giới này có thêm một người chết Bởi vì cuộc sống của các bạn thật nhàm chán Bởi vì các bạn cảm thấy mình sẽ không gánh chịu bất kỳ hậu quả nào Kẻ giết người ở làng Cựu Lâm 我不知道是谁 但杀死顾森乡的凶手 你们知道是谁 是药药救护 药 药 药 药 药 药 药 药 药 药 药药药药药药药药优优独播剧场——YoYo Television Series Exclusive我再接我将在冬日的黎明厨房 我们什么都没做 这不怪我又是呀 不再 老师 再见 青春 遥远的幻想 来 来 来 再见 青春 再见 灿烂的游戏 来 Đi Tạm biệt Lý Diệu Lý Diệu Lý Diệu Nhanh Lần trước xuống 120 Đánh 120 Đánh 120 Tạm biệt Thời thanh xuân tạm biệt nỗi buồn tham lam Tạm biệt thời thanh xuân, sự mê muội vĩnh cửu"
+}

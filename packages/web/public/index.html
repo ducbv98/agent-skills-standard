@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Viet Dubber</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header>
+        <h1>🎬 Viet Dubber</h1>
+        <p class="subtitle">
+          Dub video tiếng Trung sang tiếng Việt bằng AI (Whisper + GPT + edge-tts)
+        </p>
+      </header>
+
+      <section class="card" id="form-card">
+        <form id="url-form">
+          <label for="url-input">URL video (Bilibili / Douyin / Weibo / YouTube)</label>
+          <div class="input-row">
+            <input
+              id="url-input"
+              type="url"
+              placeholder="https://www.bilibili.com/video/BV..."
+              required
+              autofocus
+            />
+            <button type="submit" id="submit-btn">Dub video</button>
+          </div>
+          <p class="hint" id="form-hint">
+            Pipeline: Download → Extract audio → Transcribe → Translate → TTS → Merge
+          </p>
+        </form>
+      </section>
+
+      <section class="card hidden" id="progress-card">
+        <h2>Tiến trình</h2>
+        <ul class="steps" id="steps">
+          <li data-step="download"><span class="icon">○</span> <span class="title">Download</span> <span class="msg"></span></li>
+          <li data-step="extract-audio"><span class="icon">○</span> <span class="title">Extract audio</span> <span class="msg"></span></li>
+          <li data-step="transcribe"><span class="icon">○</span> <span class="title">Transcribe (Whisper)</span> <span class="msg"></span></li>
+          <li data-step="translate"><span class="icon">○</span> <span class="title">Translate (GPT)</span> <span class="msg"></span></li>
+          <li data-step="tts"><span class="icon">○</span> <span class="title">TTS (edge-tts)</span> <span class="msg"></span></li>
+          <li data-step="merge"><span class="icon">○</span> <span class="title">Merge video</span> <span class="msg"></span></li>
+        </ul>
+        <div id="error-box" class="error hidden"></div>
+      </section>
+
+      <section class="card hidden" id="review-card">
+        <h2>Review</h2>
+        <video id="review-video" controls preload="metadata"></video>
+        <p class="hint">
+          <a id="download-link" href="#" download>Tải file .mp4</a>
+        </p>
+      </section>
+    </main>
+    <script src="/app.js"></script>
+  </body>
+</html>
