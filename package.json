@@ -1,27 +1,26 @@
 {
-  "name": "mcp-hybrid-rag",
+  "name": "viet-dubber",
   "version": "1.0.0",
   "private": true,
-  "description": "MCP servers for Context7 & Playwright + GraphRAG/CAG hybrid engine",
+  "description": "Auto-download Chinese video → Vietnamese AI dubbing pipeline",
   "packageManager": "pnpm@10.0.0",
   "engines": {
     "node": ">=20.0.0"
   },
   "scripts": {
     "build": "pnpm -r build",
-    "dev": "pnpm -r --parallel dev",
-    "test": "pnpm -r test",
+    "dev": "pnpm --filter pipeline dev",
+    "dub": "pnpm --filter pipeline start",
+    "typecheck": "pnpm -r typecheck",
     "lint": "pnpm -r lint",
-    "format": "pnpm -r format",
-    "typecheck": "pnpm -r typecheck"
+    "format": "pnpm -r format"
   },
   "devDependencies": {
     "@types/node": "^20.19.30",
     "typescript": "^5.9.3",
     "prettier": "^3.4.2",
-    "eslint": "^9.18.0",
     "@eslint/js": "^9.18.0",
-    "typescript-eslint": "^8.20.0",
-    "eslint-config-prettier": "^10.0.1"
+    "eslint": "^9.18.0",
+    "typescript-eslint": "^8.20.0"
   }
 }

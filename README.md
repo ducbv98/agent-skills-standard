@@ -1,72 +1,91 @@
-# MCP Hybrid RAG
+# Viet Dubber
 
-TypeScript monorepo gồm 3 packages:
+Tự động download video Trung Quốc (Bilibili / Douyin / Weibo) → thuyết minh tiếng Việt bằng AI → xuất file video.
 
-| Package | Mô tả |
-|---|---|
-| `packages/mcp-context7` | MCP server — tìm kiếm tài liệu & context từ codebase |
-| `packages/mcp-playwright` | MCP server — browser automation qua Playwright |
-| `packages/hybrid-rag` | GraphRAG + CAG hybrid engine |
-
-## Kiến trúc
+## Pipeline
 
 ```
-AI Agent (Claude / Kiro / Cursor…)
-        │
-        ├── MCP: mcp-context7    ──►  Context search (semantic + graph)
-        ├── MCP: mcp-playwright  ──►  Browser automation
-        │
-        └── packages/hybrid-rag
-              ├── GraphRAG   ──► Neo4j (entity relationships)
-              ├── VectorRAG  ──► pgvector / Qdrant (semantic embeddings)
-              └── CAG        ──► Cache-Augmented Generation (KV cache reuse)
+URL (Bilibili / Douyin / Weibo)
+  │
+  ▼ [downloader]  yt-dlp
+  Video file (.mp4)
+  │
+  ▼ [transcriber] OpenAI Whisper API
+  Transcript tiếng Trung (SRT / JSON)
+  │
+  ▼ [translator]  OpenAI GPT-4o
+  Script tiếng Việt (đã dịch + chỉnh nhịp)
+  │
+  ▼ [tts]         edge-tts (vi-VN-HoaiMyNeural)
+  Audio thuyết minh tiếng Việt (.mp3)
+  │
+  ▼ [processor]   FFmpeg
+  Video gốc (mute) + audio TTS ghép lại
+  │
+  Output: video_vi.mp4
 ```
 
-### GraphRAG + CAG Hybrid
+## Cài đặt
 
-- **GraphRAG**: Kết hợp graph traversal (Neo4j) + vector similarity để tìm context phong phú hơn RAG thuần tuý. Entity extraction → graph upsert → hybrid retrieval (Cypher + cosine similarity).
-- **CAG (Cache-Augmented Generation)**: Preloads toàn bộ knowledge base vào KV cache của model, tránh retrieval latency. Hybrid mode: CAG cho document nhỏ/thường dùng, GraphRAG cho corpus lớn/dynamic.
+### 1. Prerequisites
 
-## Quick Start
+```bash
+# yt-dlp
+pip install yt-dlp
+
+# ffmpeg (Windows)
+winget install ffmpeg
+
+# edge-tts
+pip install edge-tts
+```
+
+### 2. Project
 
 ```bash
 pnpm install
-cp packages/hybrid-rag/.env.example packages/hybrid-rag/.env
-# Điền NEO4J_URI, NEO4J_PASSWORD, OPENAI_API_KEY, QDRANT_URL
-pnpm build
+cp .env.example .env
+# Điền OPENAI_API_KEY
 ```
 
-### Chạy MCP servers
+### 3. Chạy
 
 ```bash
-# Context7
-pnpm --filter mcp-context7 start
+# Dub một video
+pnpm dub -- --url "https://www.bilibili.com/video/BV1xx..."
 
-# Playwright
-pnpm --filter mcp-playwright start
+# Có thêm options
+pnpm dub -- --url "..." --voice vi-VN-NamMinhNeural --output ./output
 ```
 
-### Đăng ký vào AI agent (ví dụ Kiro / Claude)
+## Cấu trúc
 
-```jsonc
-{
-  "mcpServers": {
-    "context7": {
-      "command": "node",
-      "args": ["packages/mcp-context7/dist/index.js"]
-    },
-    "playwright": {
-      "command": "node",
-      "args": ["packages/mcp-playwright/dist/index.js"]
-    }
-  }
-}
+```
+packages/
+  downloader/   yt-dlp wrapper
+  transcriber/  Whisper API
+  translator/   GPT-4o translate
+  tts/          edge-tts wrapper
+  processor/    FFmpeg audio replace
+  pipeline/     CLI orchestrator
 ```
 
-## Yêu cầu
+## Voices
 
-- Node.js >= 20
-- pnpm >= 10
-- Neo4j >= 5 (cho GraphRAG)
-- Qdrant hoặc pgvector (cho vector store)
-- OpenAI API key (hoặc bất kỳ embedding provider nào)
+| Voice | Giới tính | Chất lượng |
+|---|---|---|
+| `vi-VN-HoaiMyNeural` | Nữ | ⭐⭐⭐⭐⭐ (mặc định) |
+| `vi-VN-NamMinhNeural` | Nam | ⭐⭐⭐⭐⭐ |
+
+## Environment Variables
+
+| Biến | Mô tả |
+|---|---|
+| `OPENAI_API_KEY` | Required — Whisper + GPT |
+| `OPENAI_BASE_URL` | Optional — custom endpoint |
+| `OUTPUT_DIR` | Thư mục lưu output (default: `./output`) |
+| `WORK_DIR` | Thư mục làm việc tạm (default: `./tmp`) |
+| `TTS_VOICE` | edge-tts voice (default: `vi-VN-HoaiMyNeural`) |
+| `TTS_RATE` | Tốc độ đọc, ví dụ `+0%`, `-10%` |
+| `WHISPER_MODEL` | `whisper-1` (default) |
+| `GPT_MODEL` | `gpt-4o` (default) |
