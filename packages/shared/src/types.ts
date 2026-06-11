@@ -27,6 +27,8 @@ export interface TranslatedSegment {
   end: number;
   original: string;        // tiếng Trung
   translated: string;      // tiếng Việt
+  /** Speaker ID (0-based). 0 = narrator/unknown, 1+ = nhân vật */
+  speakerId?: number;
 }
 
 /** Kết quả dịch */

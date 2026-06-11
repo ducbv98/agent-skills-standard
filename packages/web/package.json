@@ -11,8 +11,8 @@
   "dependencies": {
     "@viet-dubber/shared": "workspace:*",
     "@viet-dubber/pipeline": "workspace:*",
-    "fastify": "^4.29.0",
-    "@fastify/static": "^7.0.4",
+    "fastify": "^5.4.0",
+    "@fastify/static": "^8.0.0",
     "dotenv": "^16.4.7"
   },
   "devDependencies": {

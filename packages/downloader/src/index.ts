@@ -16,6 +16,29 @@ export interface DownloaderOptions {
   format?: string;
 }
 
+/** Validate URL — chỉ cho phép http/https, block path traversal */
+function validateUrl(url: string): void {
+  let parsed: URL;
+  try {
+    parsed = new URL(url);
+  } catch {
+    throw new Error("URL không hợp lệ");
+  }
+  if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
+    throw new Error("Chỉ chấp nhận URL http/https");
+  }
+}
+
+/** Sanitize path component — strip traversal sequences */
+function safePath(base: string, filename: string): string {
+  const safe = path.basename(filename.replace(/\.\./g, "_"));
+  const resolved = path.resolve(base, safe);
+  if (!resolved.startsWith(path.resolve(base))) {
+    throw new Error("Path traversal detected");
+  }
+  return resolved;
+}
+
 /** Detect platform từ URL */
 function detectPlatform(url: string): DownloadResult["platform"] {
   if (url.includes("bilibili.com") || url.includes("b23.tv")) return "bilibili";
@@ -75,8 +98,9 @@ export async function downloadVideo(
   const ytdlpBin = options.ytdlpPath ?? "yt-dlp";
   const platform = detectPlatform(url);
 
-  // Tạo output dir nếu chưa có
+  validateUrl(url);
   fs.mkdirSync(options.outputDir, { recursive: true });
+  const resolvedOutputDir = path.resolve(options.outputDir);
 
   // Base args
   const baseArgs: string[] = ["--no-playlist"];
@@ -112,30 +136,27 @@ export async function downloadVideo(
     .replace(/\s+/g, "_")
     .slice(0, 80);
 
-  const outputTemplate = path.join(options.outputDir, `${safeTitle}.%(ext)s`);
+  const outputTemplate = path.join(resolvedOutputDir, `${safeTitle}.%(ext)s`);
 
-  // Download
   await runYtDlp(
     [...baseArgs, "--output", outputTemplate, url],
     ytdlpBin,
   );
 
-  // Tìm file vừa download
-  const files = fs.readdirSync(options.outputDir).filter((f) =>
+  const files = fs.readdirSync(resolvedOutputDir).filter((f) =>
     f.startsWith(safeTitle) && (f.endsWith(".mp4") || f.endsWith(".mkv") || f.endsWith(".webm")),
   );
 
   if (files.length === 0) {
-    throw new Error(`yt-dlp finished but no video file found in ${options.outputDir}`);
+    throw new Error(`yt-dlp finished but no video file found in ${resolvedOutputDir}`);
   }
 
-  // Lấy file mới nhất nếu có nhiều
   const videoFile = files
-    .map((f) => ({ f, mtime: fs.statSync(path.join(options.outputDir, f)).mtimeMs }))
+    .map((f) => ({ f, mtime: fs.statSync(safePath(resolvedOutputDir, f)).mtimeMs }))
     .sort((a, b) => b.mtime - a.mtime)[0]!.f;
 
   return {
-    videoPath: path.join(options.outputDir, videoFile),
+    videoPath: safePath(resolvedOutputDir, videoFile),
     title,
     duration,
     platform,

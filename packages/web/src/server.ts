@@ -29,6 +29,30 @@ if (!publicDir) {
 
 const app = Fastify({ logger: { level: "info" } });
 
+// CSRF protection: chỉ chấp nhận request có Content-Type application/json (không dùng form)
+// và kiểm tra Origin/Referer khớp HOST
+app.addHook("preHandler", async (req, reply) => {
+  if (["POST", "PUT", "PATCH", "DELETE"].includes(req.method)) {
+    const origin = req.headers["origin"] ?? req.headers["referer"] ?? "";
+    const host = req.headers["host"] ?? "";
+    // Allow same-origin và localhost dev
+    if (origin && !origin.includes(host.split(":")[0] ?? "")) {
+      return reply.status(403).send({ error: "CSRF: origin not allowed" });
+    }
+    const ct = req.headers["content-type"] ?? "";
+    if (!ct.includes("application/json")) {
+      return reply.status(415).send({ error: "Content-Type must be application/json" });
+    }
+  }
+});
+
+// Security headers
+app.addHook("onSend", async (_req, reply) => {
+  reply.header("X-Content-Type-Options", "nosniff");
+  reply.header("X-Frame-Options", "DENY");
+  reply.header("Content-Security-Policy", "default-src 'self'");
+});
+
 await app.register(fastifyStatic, {
   root: publicDir,
   prefix: "/",

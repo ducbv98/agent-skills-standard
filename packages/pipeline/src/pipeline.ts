@@ -120,6 +120,7 @@ export async function runPipeline(
     voice: config.voice,
     rate: config.ttsRate,
     volume: config.ttsVolume,
+    speakerVoices: config.speakerVoices,
     outputDir: path.join(runWorkDir, "tts"),
   });
   const segmentAudios = ttsResult.segments;

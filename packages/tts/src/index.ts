@@ -6,14 +6,44 @@ import type { TranslateResult, TtsResult } from "@viet-dubber/shared";
 export interface TtsOptions {
   /** Đường dẫn đến edge-tts binary. Mặc định: "edge-tts" (trong PATH) */
   edgeTtsPath?: string;
-  /** Voice — mặc định vi-VN-HoaiMyNeural */
+  /** Voice mặc định (speaker 0) — mặc định vi-VN-HoaiMyNeural */
   voice?: string;
+  /** Map speakerId → voice. Key là speakerId (number), value là tên voice edge-tts */
+  speakerVoices?: Record<number, string>;
   /** Tốc độ đọc, ví dụ "+0%", "-10%", "+15%" */
   rate?: string;
   /** Âm lượng, ví dụ "+0%", "-20%" */
   volume?: string;
   /** Thư mục lưu file audio output */
   outputDir: string;
+}
+
+/** Voice pool mặc định — xoay vòng cho các speakerId chưa được map */
+const DEFAULT_VOICE_POOL = [
+  "vi-VN-HoaiMyNeural",   // 0: narrator/default (nữ)
+  "vi-VN-NamMinhNeural",  // 1: nhân vật 1 (nam)
+  "vi-VN-HoaiMyNeural",   // 2: nhân vật 2 — đổi pitch qua rate
+  "vi-VN-NamMinhNeural",  // 3+
+];
+
+function resolveVoice(speakerId: number, options: TtsOptions): string {
+  if (options.speakerVoices?.[speakerId]) return options.speakerVoices[speakerId]!;
+  return DEFAULT_VOICE_POOL[speakerId % DEFAULT_VOICE_POOL.length] ?? "vi-VN-HoaiMyNeural";
+}
+
+/** Strip ký tự control có thể inject shell command */
+function sanitizeText(text: string): string {
+  // Xóa null bytes và control characters (trừ tab/newline hợp lệ)
+  return text.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, "").trim();
+}
+
+/** Validate outputPath nằm trong allowedDir */
+function validateOutputPath(outputPath: string, allowedDir: string): void {
+  const resolved = path.resolve(outputPath);
+  const base = path.resolve(allowedDir);
+  if (!resolved.startsWith(base + path.sep) && resolved !== base) {
+    throw new Error("Path traversal detected in outputPath");
+  }
 }
 
 /** Chạy edge-tts CLI và đợi kết thúc */
@@ -86,8 +116,12 @@ export async function synthesizeOne(
   const voice = options.voice ?? "vi-VN-HoaiMyNeural";
 
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+  validateOutputPath(outputPath, path.dirname(outputPath));
 
-  const args = ["--voice", voice, "--text", text, "--write-media", outputPath];
+  const safeText = sanitizeText(text);
+  if (!safeText) throw new Error("Text rỗng sau khi sanitize");
+
+  const args = ["--voice", voice, "--text", safeText, "--write-media", outputPath];
   if (options.rate) args.push("--rate", options.rate);
   if (options.volume) args.push("--volume", options.volume);
 
@@ -183,8 +217,12 @@ export async function synthesizeSegmentsDetailed(
       `seg_${String(i).padStart(5, "0")}.mp3`,
     );
 
+    const speakerId = seg.speakerId ?? 0;
+    const voice = resolveVoice(speakerId, options);
+    const segOptions = { ...options, voice };
+
     try {
-      await synthesizeOne(text, audioPath, options);
+      await synthesizeOne(text, audioPath, segOptions);
       const durationMs = await probeDurationMs(audioPath);
       segments.push({
         index: i,
@@ -197,7 +235,7 @@ export async function synthesizeSegmentsDetailed(
     } catch (err) {
       const detail = err instanceof Error ? err.message : String(err);
       process.stderr.write(
-        `[TTS] Skip segment ${i} — ${detail.slice(0, 200)}\n`,
+        `[TTS] Skip segment ${i} — ${detail.replace(/[\r\n]/g, " ").slice(0, 200)}\n`,
       );
       failed++;
     }

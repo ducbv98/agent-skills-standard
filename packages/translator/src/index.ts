@@ -18,11 +18,12 @@ const SYSTEM_PROMPT = `Bạn là chuyên gia dịch lời thuyết minh phim t�
 
 YÊU CẦU TUYỆT ĐỐI:
 - Output PHẢI là JSON object đúng schema { "items": [...] } — KHÔNG được thiếu ID nào trong input.
-- Mỗi item phải có "id" và "translated".
+- Mỗi item phải có "id", "translated", và "speaker_id".
 - "translated" PHẢI là tiếng Việt thuần — KHÔNG được chứa bất kỳ ký tự Hán/Trung nào (CJK).
 - Nếu không hiểu nghĩa, hãy dịch theo phán đoán hợp lý — vẫn là tiếng Việt thuần.
 - Tên riêng người/địa danh: phiên âm Hán Việt (vd: 顾三香 → "Cố Tam Hương", 李瑶 → "Lý Diêu").
 - Dịch tự nhiên, ngắn gọn, nghe như thuyết minh phim Việt.
+- "speaker_id": số nguyên 0-based định danh nhân vật nói đoạn đó. Dùng 0 cho narrator/nhân vật chưa rõ. Các nhân vật phân biệt nhau được gán ID tăng dần (1, 2, 3...). Nhất quán trong cả batch.
 - KHÔNG thêm chú thích, ghi chú, giải thích nằm ngoài JSON.`;
 
 interface SegmentInput {
@@ -33,6 +34,7 @@ interface SegmentInput {
 interface SegmentOutput {
   id: number;
   translated: string;
+  speaker_id?: number;
 }
 
 /** Detect text còn chứa Hán tự */
@@ -45,12 +47,10 @@ function extractItems(parsed: unknown): SegmentOutput[] {
   if (Array.isArray(parsed)) return parsed as SegmentOutput[];
   if (parsed && typeof parsed === "object") {
     const obj = parsed as Record<string, unknown>;
-    // Thử các key thường gặp
     for (const key of ["items", "translations", "results", "data", "segments"]) {
       const val = obj[key];
       if (Array.isArray(val)) return val as SegmentOutput[];
     }
-    // Fallback: lấy array đầu tiên trong values
     for (const val of Object.values(obj)) {
       if (Array.isArray(val)) return val as SegmentOutput[];
     }
@@ -62,15 +62,15 @@ async function translateBatch(
   client: OpenAI,
   model: string,
   batch: Array<{ id: number; text: string }>,
-): Promise<Map<number, string>> {
+): Promise<{ result: Map<number, string>; speakerMap: Map<number, number> }> {
   const input: SegmentInput[] = batch.map((b) => ({ id: b.id, text: b.text }));
 
-  const userMessage = `Dịch các đoạn sau sang tiếng Việt thuần (không chứa Hán tự):
+  const userMessage = `Dịch các đoạn sau sang tiếng Việt thuần (không chứa Hán tự), và xác định speaker_id cho mỗi đoạn:
 
 ${JSON.stringify(input)}
 
 Trả về JSON object đúng format:
-{"items":[{"id":<number>,"translated":"<tiếng Việt>"},...]}`;
+{"items":[{"id":<number>,"translated":"<tiếng Việt>","speaker_id":<number>},...]}`;
 
   const response = await client.chat.completions.create({
     model,
@@ -88,20 +88,22 @@ Trả về JSON object đúng format:
   try {
     parsed = JSON.parse(raw);
   } catch {
-    return new Map();
+    return { result: new Map(), speakerMap: new Map() };
   }
 
   const outputs = extractItems(parsed);
   const result = new Map<number, string>();
+  const speakerMap = new Map<number, number>();
   for (const o of outputs) {
     if (typeof o?.id === "number" && typeof o?.translated === "string") {
       const text = o.translated.trim();
       if (text && !hasCJK(text)) {
         result.set(o.id, text);
+        if (typeof o.speaker_id === "number") speakerMap.set(o.id, o.speaker_id);
       }
     }
   }
-  return result;
+  return { result, speakerMap };
 }
 
 /** Dịch 1 segment đơn (fallback cho batch failed) */
@@ -155,6 +157,7 @@ export async function translateTranscript(
 
   // Bước 1: dịch theo batch
   const translatedMap = new Map<number, string>();
+  const speakerIdMap = new Map<number, number>();
   for (let i = 0; i < transcript.segments.length; i += BATCH_SIZE) {
     const batch = transcript.segments
       .slice(i, i + BATCH_SIZE)
@@ -163,12 +166,13 @@ export async function translateTranscript(
         text: seg.text,
       }));
     try {
-      const batchResults = await translateBatch(client, model, batch);
+      const { result: batchResults, speakerMap } = await translateBatch(client, model, batch);
       for (const [id, val] of batchResults) translatedMap.set(id, val);
+      for (const [id, sid] of speakerMap) speakerIdMap.set(id, sid);
     } catch (err) {
       const detail = err instanceof Error ? err.message : String(err);
       process.stderr.write(
-        `[Translator] Batch ${i}-${i + batch.length - 1} failed: ${detail.slice(0, 200)}\n`,
+        `[Translator] Batch ${i}-${i + batch.length - 1} failed: ${detail.replace(/[\r\n]/g, " ").slice(0, 200)}\n`,
       );
     }
   }
@@ -189,8 +193,7 @@ export async function translateTranscript(
     for (const m of missing) {
       const out = await translateSingle(client, model, m.text);
       if (out) translatedMap.set(m.id, out);
-    }
-  }
+    }  }
 
   // Bước 3: assemble final result
   const segments: TranslatedSegment[] = transcript.segments.map(
@@ -198,8 +201,8 @@ export async function translateTranscript(
       start: seg.start,
       end: seg.end,
       original: seg.text,
-      // Nếu vẫn không dịch được → giữ rỗng (TTS sẽ skip)
       translated: translatedMap.get(i) ?? "",
+      speakerId: speakerIdMap.get(i) ?? 0,
     }),
   );
 

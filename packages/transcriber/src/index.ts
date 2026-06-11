@@ -23,6 +23,8 @@ export async function transcribeAudio(
   const client = new OpenAI({
     apiKey: options.apiKey,
     baseURL: options.baseUrl,
+    timeout: 120_000,
+    maxRetries: 2,
   });
 
   const fileSizeMb = fs.statSync(audioPath).size / (1024 * 1024);

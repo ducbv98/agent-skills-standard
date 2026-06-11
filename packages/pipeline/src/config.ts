@@ -139,6 +139,20 @@ Environment:
 export interface ResolvedConfig extends PipelineConfig {
   cookiesFromBrowser?: "chrome" | "firefox" | "edge";
   cookiesFile?: string;
+  /** Map speakerId → voice, ví dụ {1:"vi-VN-NamMinhNeural"} */
+  speakerVoices?: Record<number, string>;
+}
+
+/** Parse "0:vi-VN-HoaiMyNeural,1:vi-VN-NamMinhNeural" → Record<number, string> */
+function parseSpeakerVoices(raw?: string): Record<number, string> | undefined {
+  if (!raw) return undefined;
+  const map: Record<number, string> = {};
+  for (const part of raw.split(",")) {
+    const [id, voice] = part.trim().split(":");
+    const n = Number(id);
+    if (!Number.isNaN(n) && voice) map[n] = voice.trim();
+  }
+  return Object.keys(map).length > 0 ? map : undefined;
 }
 
 export function buildConfig(args: CliArgs): ResolvedConfig {
@@ -197,6 +211,7 @@ export function buildConfig(args: CliArgs): ResolvedConfig {
     ytdlpPath,
     edgeTtsPath,
     keepTmp: args.keepTmp ?? false,
+    speakerVoices: parseSpeakerVoices(process.env.SPEAKER_VOICES),
     removeSubs:
       args.removeSubs ??
       ["1", "true", "yes", "on"].includes((process.env.REMOVE_SUBS ?? "").toLowerCase()),

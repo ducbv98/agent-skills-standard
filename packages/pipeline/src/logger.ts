@@ -14,10 +14,11 @@ export function log(event: ProgressEvent): void {
   const label = stepLabels[event.step];
   const pct = event.percent !== undefined ? ` (${event.percent}%)` : "";
   const marker = event.status === "done" ? "OK — " : "";
-  process.stdout.write(`[${label}]${pct} ${marker}${event.message}\n`);
+  const safeMsg = event.message.replace(/[\r\n]/g, " ");
+  process.stdout.write(`[${label}]${pct} ${marker}${safeMsg}\n`);
 }
 
 export function logError(message: string, err: unknown): void {
-  const detail = err instanceof Error ? err.message : String(err);
+  const detail = (err instanceof Error ? err.message : String(err)).replace(/[\r\n]/g, " ");
   process.stderr.write(`\n[ERROR] ${message}: ${detail}\n`);
 }

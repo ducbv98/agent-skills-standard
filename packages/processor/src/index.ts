@@ -28,6 +28,13 @@ export interface ProcessorOptions {
   subsHeightRatio?: number;
 }
 
+/** Validate file path tồn tại và không chứa traversal */
+function validateFilePath(filePath: string): void {
+  const resolved = path.resolve(filePath);
+  if (resolved !== filePath && !path.isAbsolute(filePath)) return; // relative ok
+  if (filePath.includes("..")) throw new Error(`Path traversal detected: ${path.basename(filePath)}`);
+}
+
 /** Chạy ffmpeg và đợi kết thúc */
 async function runFfmpeg(args: string[], bin: string): Promise<void> {
   return new Promise((resolve, reject) => {
@@ -177,6 +184,8 @@ export async function buildDubbedVideo(
   outputPath: string,
   options: ProcessorOptions,
 ): Promise<ProcessResult> {
+  validateFilePath(videoPath);
+  validateFilePath(outputPath);
   const ffmpegBin = options.ffmpegPath ?? "ffmpeg";
   const ffprobeBin = ffmpegBin === "ffmpeg" ? "ffprobe" : ffmpegBin.replace(/ffmpeg(\.exe)?$/i, "ffprobe$1");
   const muteOriginal = options.muteOriginal ?? true;
@@ -257,6 +266,7 @@ export async function extractAudio(
   videoPath: string,
   options: { ffmpegPath?: string; outputDir?: string } = {},
 ): Promise<string> {
+  validateFilePath(videoPath);
   const ffmpegBin = options.ffmpegPath ?? "ffmpeg";
   const outDir = options.outputDir ?? os.tmpdir();
   fs.mkdirSync(outDir, { recursive: true });
